@@ -8,7 +8,7 @@ Profesor: Sergio Franco Casillas
 #include <iostream>
 #include <vector>
 using namespace std;
-int r,i,n,z=1, x=0, res=0,e,a=0,j, temp;
+int r,i,n,z=1, x=0, res=0,e,a=0,j, temp, objective;
 vector <int> v;
 //definicion
 void mostrar()
@@ -18,7 +18,8 @@ void mostrar()
         cout << v[i] << " ";
     }
     cout<<" \n";
-}
+}//fin
+
 void llenado()
 {
   cout<<"ingresa el grado de la matriz: ";
@@ -30,7 +31,8 @@ void llenado()
       v.push_back(1 + rand() % x);
     }
   mostrar();
-}
+}//fin
+
 void manual()
 {
   cout<<"\n cuantos elementos quieres agregar?: ";
@@ -42,14 +44,16 @@ void manual()
       v.push_back(x);
     }
   mostrar();
-}
+}//fin
+
 void borrar()
 {
   cout<<"\n que elemento queires eliminar?: \n";
       cin>>i;
     v.erase(v.begin()+i);
   mostrar();
-}
+}//fin
+
 void operar()
 {
   cout<<"Elige, 1 para sumar y mult | 2 para max, min, promedio: \n";
@@ -86,6 +90,7 @@ else if(r==2)
     cout<<"\nEl mayor es: "<< x <<"\n el menor es: "<<a <<"\n";
 }
 }///fin
+
 void burbuja()
 {
   for(i=0;i<v.size();i++)
@@ -102,11 +107,53 @@ void burbuja()
     }
   mostrar();
 }//fin
-
+void swap(int &a,int &b){
+    int aux = a;
+    a = b;
+    b = aux;
+}//fin
+int particion(vector<int>&v, int beg, int fin)
+{
+  temp = v[beg];
+  int i = beg +1;
+  for(int j = i; j <= fin; j++)
+  {
+    if (v[j] < temp)
+    {
+      swap(v[i], v[j]);
+      i++;
+    }
+  }
+  swap(v[beg], v[i-1]);
+  return i-1;
+}//fin
 void quick(vector <int> &v, int beg, int fin)
 {
-  
-}
+  if(beg<fin)
+  {
+ temp = particion(v,beg,fin);
+    quick(v,beg,temp-1);
+    quick(v,temp+1,fin);
+  }
+}//fin
+int binaria(vector<int>&v,int left, int right, int objective)
+{
+  if (right >= left)
+  {
+    int mid = left + (right - left) / 2;
+    if (v[mid] == objective)
+    {
+      return mid;
+    }
+    if (v[mid] > objective)
+    {
+      return binaria(v,left,mid-1,objective);
+    }
+    return binaria(v, mid + 1, right, objective);
+  }
+   return -1;
+}//fin
+
 int main()//inicio
 {
   inicio:
@@ -142,11 +189,24 @@ int main()//inicio
       burbuja();
     goto inicio;
       }
-      else
-        
+      else if(e==2)
+      {
+      quick(v,0,v.size()-1);
+      mostrar();
       goto inicio;
+      }
     break;//fin
     case 7:
+      cout<<"Escribe el numero que quieres encontrar: \n";
+      cin>>objective;
+      res = binaria(v,0,v.size()-1, objective);
+      if(res == -1)
+      {
+        cout<<"El elemento no se ha encontrado \n";
+      }
+      else {
+        cout<<"El elemento se ha encontrado en la posicion: "<<res +1 <<endl;
+      }
       goto inicio;
     break;//fin
     default:
