@@ -1,5 +1,6 @@
 /***********************************presentacion******************************
 Nombre: Victor Eduardo Macias Macias
+Adrian Sanchez Paredes
 Fecha: 1/03/2022
 programa: Actividad de programacion 7.
 Centro Universitario de los Altos/ UNIVERSIDAD DE GUADALAJARA/ INGENIRÍA EN COMPUTACIÓN/ 2DO SEMESTRE
